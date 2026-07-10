@@ -1,16 +1,29 @@
-version: "0.1"
 services:
   db:
-  image: postgres:18-alpine
+    image: postgres:18-alpine
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d db"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+
+  app:
+    build:
+      context: ./app/
+      dockerfile: .Dockerfile
+    container_name: spring_app
     ports:
       - "8080:8080"
-    environment:
-      - POSTGRES_DB: db
-      - POSTGRES_USER: user
-      - POSTGRES_PASSWORD: pass
-
-  migrations:
-
-  java:
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

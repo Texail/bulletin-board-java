@@ -7,7 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BulletinBoardJavaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BulletinBoardJavaApplication.class, args);
+		System.out.println("Hello world!");
+//		SpringApplication.run(BulletinBoardJavaApplication.class, args);
 	}
 
 }
