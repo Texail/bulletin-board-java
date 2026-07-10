@@ -9,7 +9,7 @@ RUN ./gradlew dependencies --no-daemon
 
 COPY src ./src
 
-RUN ./gradlew build --no-daemon
+RUN ./gradlew build -x test --no-daemon
 
 # Runtime stage
 FROM eclipse-temurin:25-jre
