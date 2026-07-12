@@ -10,8 +10,10 @@ public class Ad {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(nullable = false)
     private String title;
     private String description;
+
     private float price;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")

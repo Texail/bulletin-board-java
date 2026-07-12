@@ -17,20 +17,7 @@ public class BulletinBoardJavaApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(UserRepository repository) {
-		return (args -> {
-			repository.save(new User("Помпа"));
-			repository.save(new User("Гидра"));
-
-			logger.info("Customers found with findAll():");
-			logger.info("-------------------------------");
-			repository.findAll().forEach(user -> {
-				logger.info(user.toString());
-			});
-			logger.info("");
-
-
-		});
+	public CommandLineRunner startUI (ConsoleUI consoleUI) {
+		return args -> consoleUI.start();
 	}
-
 }
