@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 public class Ad {
@@ -13,9 +14,9 @@ public class Ad {
     @Column(nullable = false)
     private String title;
     private String description;
-
+    @Column(nullable = false)
     private float price;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id")
     private User author;
     @CreationTimestamp
@@ -30,6 +31,7 @@ public class Ad {
     public Ad(String title, String  description, float price, User user) {
         this.title = title;
         this.description = description;
+        validatePrice(price);
         this.price = price;
         this.author = user;
     }
@@ -44,11 +46,36 @@ public class Ad {
     public void setDescription(String description) { this.description = description; }
 
     public float getPrice() { return price; }
-    public void setPrice(float price) { this.price = price; }
+    public void setPrice(float price) {
+        validatePrice(price);
+        this.price = price;
+    }
 
     public User getAuthor() { return author; }
     public void setAuthor(User author) { this.author = author; }
 
     public AdStatus getStatus() { return status; }
     public void setStatus(AdStatus status) { this.status = status; }
+
+    @Override
+    public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+        String formattedDate = publicationDate != null ? publicationDate.format(formatter) : "N/A";
+
+        return "Ad{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", author=" + (author != null ? author.getUsername() : "null") +
+                ", publicationDate=" + formattedDate +
+                ", status=" + status +
+                '}';
+    }
+
+    private void validatePrice(float price) {
+        if (price < 0) {
+            throw new IllegalArgumentException("Price cannot be negative");
+        }
+    }
 }

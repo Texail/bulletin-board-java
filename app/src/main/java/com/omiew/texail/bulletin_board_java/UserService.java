@@ -41,4 +41,10 @@ public class UserService {
             throw new RuntimeException("The username or password is incorrect.");
         }
     }
+
+    public void ensureUserNotBlocked(User user) {
+        if (user.isBlocked()) {
+            throw new RuntimeException("Blocked users cannot perform this action.");
+        }
+    }
 }

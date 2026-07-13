@@ -23,7 +23,7 @@ public class User {
     @Column(length = 20, nullable = false)
     private Role role = Role.USER;
     @Column(nullable = false)
-    private boolean status = false;
+    private boolean blocked = false;
 
     protected User() {}
 
@@ -70,6 +70,6 @@ public class User {
     public Role getRole() { return role; }
     public void setRole(Role role) { this.role = role; }
 
-    public boolean getStatus() { return status; }
-    public void setStatus(boolean status) { this.status = status; }
+    public boolean isBlocked() { return blocked; }
+    public void setBlocked(boolean blocked) { this.blocked = blocked; }
 }
