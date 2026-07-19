@@ -21,6 +21,9 @@ public class UserService {
             String username,
             String password
     ) {
+        if (firstName.trim().isEmpty() || lastName.trim().isEmpty() || email.trim().isEmpty() || username.trim().isEmpty() || password.trim().isEmpty()) {
+            throw new RuntimeException("Fields cannot be empty.");
+        }
         if (userRepository.findByUsername(username).isPresent()) {
             throw new RuntimeException("This username is already in use.");
         }
@@ -28,6 +31,9 @@ public class UserService {
             throw new RuntimeException("This email is already in use.");
         }
         User user = new User(firstName, lastName, email, username, password);
+        user.setIsBlocked(false);
+        user.setRole(Role.USER);
+
         return userRepository.save(user);
     }
 

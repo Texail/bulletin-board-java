@@ -21,9 +21,9 @@ public class User {
     private String hashedPassword;
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
-    private Role role = Role.USER;
+    private Role role;
     @Column(nullable = false)
-    private boolean blocked = false;
+    private boolean blocked;
 
     protected User() {}
 
@@ -71,5 +71,5 @@ public class User {
     public void setRole(Role role) { this.role = role; }
 
     public boolean isBlocked() { return blocked; }
-    public void setBlocked(boolean blocked) { this.blocked = blocked; }
+    public void setIsBlocked(boolean blocked) { this.blocked = blocked; }
 }
